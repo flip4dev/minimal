@@ -13,7 +13,7 @@ class Minimal::Template
     protected
 
       def template_class_name(path)
-        path =~ %r(views/(.*).rb) && $1.gsub('.', '/').camelize
+        path =~ %r(views/(.*).rb) && $1.gsub('.', '/').camelize || path =~ %r((kos/.*).rb) && $1.gsub('.', '/').camelize
       end
   end
 end

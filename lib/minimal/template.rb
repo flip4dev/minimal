@@ -5,7 +5,10 @@ class Minimal::Template
   AUTO_BUFFER = %r(render|tag|error_message_|select|debug|_to|_for)
 
   TAG_NAMES = %w(a body div em fieldset h1 h2 h3 h4 head html img input label li
-    link ol option p pre script select span strong table thead tbody tfoot td th tr ul)
+    ol option p pre script select span strong table thead tbody tfoot td th tr ul
+    title)
+
+  EMPTY_TAG_NAMES = %w(link meta hr)
 
   module Base
     attr_accessor :view, :locals
@@ -38,12 +41,24 @@ class Minimal::Template
       # define_method("#{name}_for") { |*args, &block| content_tag_for(name, *args, &block) }
     end
 
+    EMPTY_TAG_NAMES.each do |name|
+      module_eval(<<-"END")
+        def #{name}(*args)
+          tag(:#{name}, *args)
+        end
+      END
+    end
+
     def <<(output)
       view.output_buffer << output.to_s
     end
 
     def respond_to?(method)
       view.respond_to?(method) || locals.key?(method) || view.instance_variable_defined?("@#{method}")
+    end
+
+    def raw_text(output = nil, &block)
+      view.output_buffer << (block_given? ? capture(&block) : output).to_s.html_safe
     end
 
     protected

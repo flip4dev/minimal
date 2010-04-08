@@ -35,10 +35,6 @@ class Minimal::Template
           content_tag_for(:#{name}, *args, &block)
         end
       END
-
-      # does not work in jruby 1.4.0 -> throws syntax error
-      # define_method(name) { |*args, &block| content_tag(name, *args, &block) }
-      # define_method("#{name}_for") { |*args, &block| content_tag_for(name, *args, &block) }
     end
 
     EMPTY_TAG_NAMES.each do |name|

@@ -49,8 +49,14 @@ class Minimal::Template
       END
     end
 
-    def <<(output)
-      view.output_buffer << output.to_s
+    if Rails.env.development?
+      def <<(output)
+        view.output_buffer << output.to_s << "\n"
+      end
+    else
+      def <<(output)
+        view.output_buffer << output.to_s
+      end
     end
 
     def respond_to?(method)

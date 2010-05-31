@@ -6,7 +6,7 @@ class Minimal::Template
 
   TAG_NAMES = %w(a body div em fieldset h1 h2 h3 h4 head html img input label li
     ol option p pre script select span strong table caption thead tbody tfoot td th tr ul
-    title)
+    title dl dd dt)
 
   EMPTY_TAG_NAMES = %w(link meta hr)
 

@@ -60,7 +60,7 @@ class Minimal::Template
     end
 
     def raw_text(output = nil, &block)
-      view.output_buffer << (block_given? ? capture(&block) : output).to_s.html_safe
+      view.output_buffer << (block_given? ? block.call : output).to_s.html_safe
     end
 
     protected
